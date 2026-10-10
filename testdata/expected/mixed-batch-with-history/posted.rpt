@@ -1,0 +1,10 @@
+POSTED TRANSACTIONS REPORT    BATCH B2026015    BATCH DATE 2026-01-15
+
+  REC NO  TXN ID        DATE        T  ACCOUNT     CONTRA                 AMOUNT       ACCOUNT BALANCE         CONTRA BALANCE
+------------------------------------------------------------------------------------------------------------------------------
+       1  MIX000000001  2026-01-15  D  1000000001                       1,250.00              2,250.00
+       3  MIX000000003  2026-01-15  T  1000000003  1000000002           4,200.00             45,800.00               6,700.50
+       9  MIX000000008  2026-01-14  D  1000000007                          25.00                  0.00
+
+TRANSACTIONS POSTED:          3
+END OF REPORT

@@ -1,0 +1,8 @@
+REJECTED TRANSACTIONS REPORT  BATCH B2026015    BATCH DATE 2026-01-15
+
+  REC NO  TXN ID        DATE      T  ACCOUNT     CONTRA      AMOUNT         CODE  REASON
+----------------------------------------------------------------------------------------------------------------------------------
+       1  DEP000000001  20260115  D  1000000001              0000000025000  B008  ACCOUNT NOT ON THE ACCOUNT MASTER
+
+TRANSACTIONS REJECTED:          1
+END OF REPORT

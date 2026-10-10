@@ -1,0 +1,54 @@
+BATCH SUMMARY REPORT
+====================
+BATCH ID                                    B2026015
+BATCH DATE                                  2026-01-15
+
+RULES IN FORCE
+  MAXIMUM DEPOSIT                                     1,000,000.00
+  MAXIMUM WITHDRAWAL                                      5,000.00
+  MAXIMUM TRANSFER                                       20,000.00
+  DAILY DEBIT LIMIT PER ACCOUNT                          25,000.00
+  OVERDRAFT LIMIT                                             0.00
+  MAXIMUM BACKDATE DAYS                                          5
+
+INPUT
+  ACCOUNTS ON OPENING MASTER                                     8
+  PRIOR TRANSACTION IDS LOADED                                   0
+  TRANSACTION RECORDS READ                                      16
+
+RESULT
+  TRANSACTIONS POSTED                                            2
+  TRANSACTIONS REJECTED                                         14
+  DEPOSITS POSTED                                                2
+  DEPOSITS POSTED AMOUNT                                     20.00
+  WITHDRAWALS POSTED                                             0
+  WITHDRAWALS POSTED AMOUNT                                   0.00
+  TRANSFERS POSTED                                               0
+  TRANSFERS POSTED AMOUNT                                     0.00
+
+REJECTIONS BY REASON
+  V001  RECORD SHORTER THAN THE REQUIRED FIELDS                    3
+  V002  RECORD LONGER THAN 80 BYTES                                1
+  V003  TRANSACTION ID NOT 12 CHARACTERS A-Z 0-9                   2
+  V004  TRANSACTION DATE NOT NUMERIC                               1
+  V005  TRANSACTION DATE NOT A CALENDAR DATE                       3
+  V010  AMOUNT NOT 13 DIGITS                                       3
+  V014  RECORD CONTAINS NON-PRINTABLE CHARACTERS                   1
+
+JOURNAL
+  ENTRIES WRITTEN                                                4
+  TOTAL DEBITS                                               20.00
+  TOTAL CREDITS                                              20.00
+
+BALANCES
+  OPENING TOTAL OF CUSTOMER BALANCES         10,000,000,054,224.50
+  NET CASH THROUGH CLEARING ACCOUNT                          20.00
+  CLOSING TOTAL OF CUSTOMER BALANCES         10,000,000,054,244.50
+
+RECONCILIATION
+  STATUS                                    PASSED
+  JOURNAL ENTRIES REPLAYED                                       4
+  ACCOUNTS COMPARED                                              8
+  DISCREPANCIES FOUND                                            0
+
+RETURN CODE                                 0004
