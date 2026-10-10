@@ -143,21 +143,31 @@ mutation script is not part of the repository.
 
 ## Results
 
-Recorded on 2026-10-10 from a clean build of the initial implementation:
+Recorded on 2026-10-10 for the initial implementation, from clean
+builds with `make test`.
+
+Local run:
 
 | Environment | GnuCOBOL 3.2.0 (MinGW, GCC 9.2.0), Windows 11, Git Bash 5 |
 |---|---|
-| Command | `make test` |
 | Lint | 32 files, no problems |
 | Unit | 5 programs, 382 checks, 0 failed |
 | Integration | 36 cases, 220 assertions, 0 failed |
 | Regression | 117 assertions, 0 failed; the `/dev/full` write-failure scenario was **not run** (Linux only) |
 
-The CI workflow repeats the build and all suites on Linux with GnuCOBOL
-3.1 and 3.2, where the write-failure scenario does run. See the Actions
-tab of the repository for those results; they are not restated here
-because this file cannot know the outcome of a run that happens after
-it is committed.
+First CI run (GitHub Actions run 38041424246, on the pull request that
+introduced the system), both jobs:
+
+| Environment | GnuCOBOL 3.1.2 on Ubuntu 24.04; GnuCOBOL 3.2.0 on Debian 13 |
+|---|---|
+| Lint | 32 files, no problems |
+| Unit | 5 programs, 382 checks, 0 failed |
+| Integration | 36 cases, 220 assertions, 0 failed |
+| Regression | 121 assertions, 0 failed, including the `/dev/full` write-failure scenario (its 4 assertions are the difference from the local count) |
+
+These are the results of the runs named above. For the state of any
+later commit, look at the Actions tab of the repository; this file
+cannot know the outcome of a run that happens after it is committed.
 
 To reproduce: install GnuCOBOL (see the README), then `make clean test`.
 
@@ -178,7 +188,7 @@ header onward that gcov treats as executable. Data definitions,
 copybooks and the test programs are excluded. This is **line coverage**
 — not branch, condition or path coverage.
 
-**Measured result** (same environment as above, all suites passing):
+**Measured result**, local Windows run (all suites passing):
 
 | Program | Lines | Covered | Percent |
 |---------|------:|--------:|--------:|
@@ -197,12 +207,16 @@ copybooks and the test programs are excluded. This is **line coverage**
 | transaction-validator.cob | 89 | 89 | 100.0% |
 | **Total** | **1,890** | **1,677** | **88.7%** |
 
-Caveats on this number:
+The same measurement in the first CI run (GnuCOBOL 3.2.0, gcov 14.2.0,
+Debian 13) gave **91.0%** (1,719 of 1,890 lines). The difference is
+entirely the write-failure scenario, which runs only on Linux and
+reaches the abandoned-run paths: `ledger-writer.cob` 87.7%, `main.cob`
+88.4% and `reporting.cob` 90.6%; every other program is unchanged.
+
+Caveats on these numbers:
 
 - gcov counts source lines, and a multi-line COBOL statement counts as
   several lines. It is a fair proportion, not an exact statement count.
-- The figure will differ slightly on Linux, where the write-failure
-  scenario exercises lines that cannot be reached on Windows.
 - High line coverage does not show that the assertions are good; the
   defect-injection check above is the evidence for that.
 
@@ -217,7 +231,7 @@ have not been executed by a test, and should be regarded as unproven.
 
 - Behaviour on any compiler other than GnuCOBOL 3.1/3.2.
 - Behaviour on EBCDIC platforms.
-- Behaviour under concurrent runs, disk exhaustion on any file other
+- Behaviour under concurrent runs, write failure on any file other
   than the journal, or process crashes.
 - Performance beyond the single 20,000-transaction observation.
 - Anything about security; see [security.md](security.md).

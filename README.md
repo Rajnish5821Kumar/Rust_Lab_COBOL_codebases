@@ -191,8 +191,8 @@ These are stated in full in the documents above; the main ones are:
   trail.** Protection of the files is left entirely to the operating
   system.
 - **One currency, no interest, fees, holds or value dating.**
-- **Verified only on GnuCOBOL** (3.2 on Windows/MinGW locally; 3.1 and
-  3.2 on Linux in CI). It has not been compiled with an IBM, Micro Focus
+- **Verified only on GnuCOBOL** (3.2.0 on Windows/MinGW locally; 3.1.2 and
+  3.2.0 on Linux in CI). It has not been compiled with an IBM, Micro Focus
   or other compiler.
 
 ## Provenance and licence
