@@ -1,0 +1,112 @@
+# Build the COBOL programs and run every automated test on each push
+# and pull request.
+#
+# Two compiler versions are exercised because the code is meant to be
+# portable across GnuCOBOL 3.x and the two differ in how LINE
+# SEQUENTIAL files report over-long records and unusual characters:
+#
+#   gnucobol-3.1   Ubuntu 24.04 package gnucobol3 (3.1.2)
+#   gnucobol-3.2   Debian 13 package gnucobol3 (3.2), in a container
+#
+# No step is allowed to fail: there is no continue-on-error and no
+# test is skipped to keep the build green.  The coverage job reports
+# a measurement; it has no threshold.
+name: COBOL CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cobol-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-gnucobol-3-1:
+    name: Build and test (GnuCOBOL 3.1, Ubuntu)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Install GnuCOBOL
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends gnucobol3
+
+      - name: Show tool versions
+        run: |
+          cobc --version
+          bash --version | head -n 1
+          awk -W version 2>/dev/null | head -n 1 || awk --version | head -n 1
+
+      - name: Lint, build and test
+        run: make test
+
+      - name: Run the example batch
+        run: make example
+
+      - name: Report source lines by language
+        run: make loc
+
+      - name: Keep the test outputs when a test fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output-gnucobol-3-1
+          path: build/test-output
+          if-no-files-found: ignore
+          retention-days: 7
+
+  test-gnucobol-3-2:
+    name: Build, test and measure coverage (GnuCOBOL 3.2, Debian)
+    runs-on: ubuntu-24.04
+    container: debian:13
+    timeout-minutes: 20
+    steps:
+      - name: Install GnuCOBOL and tools
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends \
+              gnucobol3 gcc make git ca-certificates diffutils gawk
+
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Show tool versions
+        run: |
+          cobc --version
+          gcov --version | head -n 1
+
+      - name: Lint, build and test
+        run: make test
+
+      - name: Measure line coverage
+        run: make coverage
+
+      - name: Publish the coverage table
+        if: always()
+        run: |
+          if [ -f build/coverage/coverage.txt ]; then
+            {
+              echo '### Line coverage of src/*.cob (procedure division)'
+              echo '```'
+              cat build/coverage/coverage.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Keep the test outputs when a test fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-output-gnucobol-3-2
+          path: build/test-output
+          if-no-files-found: ignore
+          retention-days: 7
