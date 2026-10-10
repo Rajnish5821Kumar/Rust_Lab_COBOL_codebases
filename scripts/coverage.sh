@@ -46,7 +46,12 @@ for tool in "$COBC" "$GCOV"; do
         exit 127
     fi
 done
-if ! "$COBC" --help | grep -q -- '--coverage'; then
+# The help text is captured before it is searched.  Piping it straight
+# into `grep -q` is a race: grep exits at the first match, cobc is
+# killed by SIGPIPE while still writing, and under pipefail the check
+# then fails even though the option is there.
+COBC_HELP="$("$COBC" --help)"
+if ! grep -q -- '--coverage' <<< "$COBC_HELP"; then
     echo "coverage.sh: this cobc has no --coverage option" \
          "(GnuCOBOL 3.2 or later is needed)" >&2
     exit 2
