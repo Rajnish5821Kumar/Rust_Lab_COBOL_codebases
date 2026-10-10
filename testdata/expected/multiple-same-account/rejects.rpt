@@ -1,0 +1,9 @@
+REJECTED TRANSACTIONS REPORT  BATCH B2026015    BATCH DATE 2026-01-15
+
+  REC NO  TXN ID        DATE      T  ACCOUNT     CONTRA      AMOUNT         CODE  REASON
+----------------------------------------------------------------------------------------------------------------------------------
+       4  MUL000000004  20260115  W  1000000001              0000000100001  B012  INSUFFICIENT AVAILABLE FUNDS
+       8  MUL000000008  20260115  W  1000000001              0000000000001  B012  INSUFFICIENT AVAILABLE FUNDS
+
+TRANSACTIONS REJECTED:          2
+END OF REPORT

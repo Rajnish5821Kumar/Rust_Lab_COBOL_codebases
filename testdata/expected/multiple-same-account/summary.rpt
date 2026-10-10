@@ -1,0 +1,48 @@
+BATCH SUMMARY REPORT
+====================
+BATCH ID                                    B2026015
+BATCH DATE                                  2026-01-15
+
+RULES IN FORCE
+  MAXIMUM DEPOSIT                                     1,000,000.00
+  MAXIMUM WITHDRAWAL                                      5,000.00
+  MAXIMUM TRANSFER                                       20,000.00
+  DAILY DEBIT LIMIT PER ACCOUNT                          25,000.00
+  OVERDRAFT LIMIT                                             0.00
+  MAXIMUM BACKDATE DAYS                                          5
+
+INPUT
+  ACCOUNTS ON OPENING MASTER                                     8
+  PRIOR TRANSACTION IDS LOADED                                   0
+  TRANSACTION RECORDS READ                                      12
+
+RESULT
+  TRANSACTIONS POSTED                                           10
+  TRANSACTIONS REJECTED                                          2
+  DEPOSITS POSTED                                                4
+  DEPOSITS POSTED AMOUNT                                    521.75
+  WITHDRAWALS POSTED                                             3
+  WITHDRAWALS POSTED AMOUNT                               2,271.00
+  TRANSFERS POSTED                                               3
+  TRANSFERS POSTED AMOUNT                                 1,350.25
+
+REJECTIONS BY REASON
+  B012  INSUFFICIENT AVAILABLE FUNDS                               2
+
+JOURNAL
+  ENTRIES WRITTEN                                               20
+  TOTAL DEBITS                                            4,143.00
+  TOTAL CREDITS                                           4,143.00
+
+BALANCES
+  OPENING TOTAL OF CUSTOMER BALANCES         10,000,000,054,224.50
+  NET CASH THROUGH CLEARING ACCOUNT                       1,749.25-
+  CLOSING TOTAL OF CUSTOMER BALANCES         10,000,000,052,475.25
+
+RECONCILIATION
+  STATUS                                    PASSED
+  JOURNAL ENTRIES REPLAYED                                      20
+  ACCOUNTS COMPARED                                              8
+  DISCREPANCIES FOUND                                            0
+
+RETURN CODE                                 0004

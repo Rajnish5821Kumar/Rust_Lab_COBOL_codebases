@@ -1,0 +1,62 @@
+# Integration test cases: one batch run per line.
+#
+#   name | control | accounts | transactions | history | return code
+#
+# control, accounts, transactions and history are file names under
+# testdata/control, testdata/accounts, testdata/transactions and
+# testdata/history.  "-" for history means the batch runs without a
+# history file.  A file name that does not exist is deliberate: it is
+# how the missing-file cases are expressed.
+#
+# The expected outputs of each case are in testdata/expected/<name>/.
+# tests/integration/run-integration.sh explains how they are compared.
+
+# ---- the three transaction types ------------------------------------
+deposit-valid            | standard.ctl | standard.dat | deposit-valid.dat           | - | 0
+withdrawal-valid         | standard.ctl | standard.dat | withdrawal-valid.dat        | - | 0
+transfer-valid           | standard.ctl | standard.dat | transfer-valid.dat          | - | 0
+
+# ---- rejected transactions ------------------------------------------
+withdrawal-insufficient  | standard.ctl | standard.dat | withdrawal-insufficient.dat | - | 4
+invalid-account          | standard.ctl | standard.dat | invalid-account.dat         | - | 4
+invalid-type             | standard.ctl | standard.dat | invalid-type.dat            | - | 4
+malformed-records        | standard.ctl | standard.dat | malformed-records.dat       | - | 4
+duplicate-ids            | standard.ctl | standard.dat | duplicate-ids.dat           | - | 4
+business-limits          | standard.ctl | standard.dat | business-limits.dat         | - | 4
+boundary-amounts         | defaults.ctl | standard.dat | boundary-amounts.dat        | - | 4
+overdraft                | overdraft.ctl | standard.dat | overdraft.dat              | - | 4
+
+# ---- batches as a whole ---------------------------------------------
+empty-transactions       | standard.ctl | standard.dat | empty.dat                   | - | 0
+multiple-same-account    | standard.ctl | standard.dat | multiple-same-account.dat   | - | 4
+mixed-batch              | standard.ctl | standard.dat | mixed-batch.dat             | empty.dat | 4
+mixed-batch-with-history | standard.ctl | standard.dat | mixed-batch.dat             | prior-batch.dat | 4
+empty-account-master     | standard.ctl | empty-master.dat | deposit-valid.dat       | - | 4
+
+# ---- missing or unreadable input files ------------------------------
+missing-transactions     | standard.ctl | standard.dat | does-not-exist.dat          | - | 12
+missing-accounts         | standard.ctl | does-not-exist.dat | deposit-valid.dat     | - | 12
+missing-control          | does-not-exist.ctl | standard.dat | deposit-valid.dat     | - | 12
+missing-history          | standard.ctl | standard.dat | deposit-valid.dat           | does-not-exist.dat | 12
+
+# ---- account master that cannot be trusted --------------------------
+master-bad-trailer-total | standard.ctl | bad-trailer-total.dat | deposit-valid.dat  | - | 12
+master-bad-trailer-count | standard.ctl | bad-trailer-count.dat | deposit-valid.dat  | - | 12
+master-no-trailer        | standard.ctl | no-trailer.dat | deposit-valid.dat         | - | 12
+master-out-of-sequence   | standard.ctl | out-of-sequence.dat | deposit-valid.dat    | - | 12
+master-duplicate-account | standard.ctl | duplicate-account.dat | deposit-valid.dat  | - | 12
+master-bad-balance       | standard.ctl | bad-balance.dat | deposit-valid.dat        | - | 12
+master-bad-status        | standard.ctl | bad-status.dat | deposit-valid.dat         | - | 12
+master-record-after-trailer | standard.ctl | record-after-trailer.dat | deposit-valid.dat | - | 12
+master-reserved-account  | standard.ctl | reserved-account.dat | deposit-valid.dat   | - | 12
+
+# ---- control file that cannot be trusted ----------------------------
+control-unknown-keyword  | unknown-keyword.ctl | standard.dat | deposit-valid.dat    | - | 12
+control-repeated-keyword | repeated-keyword.ctl | standard.dat | deposit-valid.dat   | - | 12
+control-bad-amount       | bad-amount.ctl | standard.dat | deposit-valid.dat         | - | 12
+control-no-batch-date    | no-batch-date.ctl | standard.dat | deposit-valid.dat      | - | 12
+control-impossible-date  | impossible-date.ctl | standard.dat | deposit-valid.dat    | - | 12
+
+# ---- history file that cannot be trusted ----------------------------
+history-bad-record       | standard.ctl | standard.dat | deposit-valid.dat           | bad-record.dat | 12
+history-repeated-id      | standard.ctl | standard.dat | deposit-valid.dat           | repeated-id.dat | 12

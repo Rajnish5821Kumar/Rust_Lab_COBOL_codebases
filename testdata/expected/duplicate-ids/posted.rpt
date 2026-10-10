@@ -1,0 +1,10 @@
+POSTED TRANSACTIONS REPORT    BATCH B2026015    BATCH DATE 2026-01-15
+
+  REC NO  TXN ID        DATE        T  ACCOUNT     CONTRA                 AMOUNT       ACCOUNT BALANCE         CONTRA BALANCE
+------------------------------------------------------------------------------------------------------------------------------
+       1  DUP000000001  2026-01-15  D  1000000001                         100.00              1,100.00
+       5  DUP000000003  2026-01-15  D  1000000006                          75.00                 75.00
+       6  DUP000000002  2026-01-15  W  1000000006                          50.00                 25.00
+
+TRANSACTIONS POSTED:          3
+END OF REPORT
