@@ -58,7 +58,9 @@ MODULES=(
 
 mkdir -p bin build/unit
 
-echo "build.sh: $("$COBC" --version | head -n 1)"
+COBC_VERSION="$("$COBC" --version)"
+echo "build.sh: ${COBC_VERSION%%$'
+'*}"
 
 echo "build.sh: compiling bin/ledger-batch"
 "$COBC" "${FLAGS[@]}" -o bin/ledger-batch src/main.cob "${MODULES[@]}"
