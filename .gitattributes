@@ -1,0 +1,23 @@
+# Every text file is stored and checked out with LF line endings on
+# every platform.  The fixed-width test data depends on this: with
+# CRLF endings a Linux runtime would see a carriage return as part of
+# each record.
+* text=auto eol=lf
+
+*.cob  text eol=lf
+*.cpy  text eol=lf
+*.dat  text eol=lf
+*.ctl  text eol=lf
+*.out  text eol=lf
+*.rpt  text eol=lf
+*.log  text eol=lf
+*.sh   text eol=lf
+*.awk  text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+*.txt  text eol=lf
+Makefile text eol=lf
+
+# The malformed-record fixture contains a tab on purpose; keep it
+# byte for byte.
+testdata/transactions/malformed-records.dat -text

@@ -1,0 +1,43 @@
+# Build products
+/bin/
+/build/
+
+# Compiler and coverage intermediates, wherever they are produced
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+*.i
+*.c.h
+*.c.l.h
+*.lst
+*.gcno
+*.gcda
+*.gcov
+
+# Outputs of a batch run.  Expected outputs for the tests live under
+# testdata/expected/ and are tracked; a run anywhere else is not.
+*.out
+*.rpt
+job.log
+!/testdata/expected/**
+
+# Local configuration and anything that might hold a secret
+.env
+.env.*
+*.pem
+*.key
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local assistant tooling state
+.claude/
